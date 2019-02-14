@@ -18,6 +18,9 @@
     <ClInclude Include="..\..\src\StudentsManageSystem.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\StudentsManageSystem.cpp">
@@ -26,5 +29,13 @@
     <ClCompile Include="..\..\src\extra\sqlite3.c">
       <Filter>源文件</Filter>
     </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="StudentsManageSystem.rc">
+      <Filter>资源文件</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\LICENSE" />
   </ItemGroup>
 </Project>
