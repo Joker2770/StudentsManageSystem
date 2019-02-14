@@ -49,6 +49,7 @@ int main()
 		
 		//pause
 		int n;
+		int iNumber = 0;
 
 		scanf("%d",&n);
 		//judge
@@ -72,6 +73,10 @@ int main()
 			case 7:
 				break;
 			case 8:
+				PrintStudent();
+				printf("Please input the ID which you want to delete:\n");
+				scanf("%d", &iNumber);
+				DeleteStudent(iNumber);
 				break;
 			case 0:
 				printf("Welcome to use again!\n");
@@ -236,3 +241,39 @@ void SaveStudent()
 	printf("Save data successful!\n");
 }
 
+void DeleteStudent(int iNum)
+{
+	system(clear);
+
+	sqlite3 *db;
+	char *zErrMsg = 0;
+	int rc;
+	char sql[1024] = "";
+	memset(sql, 0, sizeof(sql));
+	const char* data = "Callback function called";
+
+	/* Open database */
+	rc = sqlite3_open("test.db", &db);
+	if (rc) {
+		fprintf(stderr, "Can't open database: %s\n", sqlite3_errmsg(db));
+		exit(0);
+	}
+	else {
+		fprintf(stderr, "Opened database successfully\n");
+	}
+
+	/* Create merged SQL statement */
+	sprintf(sql, "DELETE from STUDENT where ID=%d; " \
+		"SELECT * from STUDENT", iNum);
+
+	/* Execute SQL statement */
+	rc = sqlite3_exec(db, sql, callback, (void*)data, &zErrMsg);
+	if (rc != SQLITE_OK) {
+		fprintf(stderr, "SQL error: %s\n", zErrMsg);
+		sqlite3_free(zErrMsg);
+	}
+	else {
+		fprintf(stdout, "Operation done successfully\n");
+	}
+	sqlite3_close(db);
+}

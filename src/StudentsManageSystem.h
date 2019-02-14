@@ -31,3 +31,4 @@ Node *g_pHead = NULL;	//head node
 void InputStudent();
 void PrintStudent();
 void SaveStudent();
+void DeleteStudent(int);
