@@ -54,3 +54,4 @@ void InputStudent();
 void PrintStudent();
 void SaveStudent();
 void DeleteStudent(int);
+int countStudent();

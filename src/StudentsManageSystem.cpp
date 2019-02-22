@@ -41,7 +41,10 @@ const char *clear = "cls";
 
 #include<string.h>
 #include"StudentsManageSystem.h"
+extern "C"
+{
 #include "extra/sqlite3.h"
+};
 
 static int callback(void *NotUsed, int argc, char **argv, char **azColName) {
 	int i;
@@ -89,6 +92,7 @@ int main()
 			case 4:
 				break;
 			case 5:
+				countStudent();
 				break;
 			case 6:
 				break;
@@ -186,6 +190,40 @@ void PrintStudent()
 
 	printf("*******************************************************\n");
 }
+
+int countStudent()
+{
+	system(clear);
+
+	sqlite3 *db;
+	char *zErrMsg = 0;
+	int rc;
+	const char* data = "Callback function called";
+	char sql[1024] = "";
+	memset(sql, 0, sizeof(sql));
+
+	/* Open database */
+	rc = sqlite3_open("test.db", &db);
+	if (rc) {
+		fprintf(stderr, "Can't open database: %s\n", sqlite3_errmsg(db));
+		exit(0);
+	}
+	else {
+		fprintf(stderr, "Opened database successfully\n");
+	}
+
+	/* Create SQL statement */
+	strcpy(sql, "SELECT count(*) as num from STUDENT");
+
+	/* Execute SQL statement */
+	rc = sqlite3_exec(db, sql, callback, (void*)data, &zErrMsg);
+	fprintf(stdout, "Operation done successfully\n");
+
+	sqlite3_close(db);
+
+	return rc;
+}
+
 void SaveStudent()
 {
 	system(clear);
